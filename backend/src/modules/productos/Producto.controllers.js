@@ -23,6 +23,11 @@ export const obtenerProductoId = async (req, res) => {
 };
 
 export const crearProducto = async (req, res) => {
+    if (!req.body || !req.body.codigo) {
+        return res.status(400).json({
+            error: "Debes enviar JSON con codigo, descripcion, unidad, costo y precio (Header Content-Type: application/json)",
+        });
+    }
     const datos = {
         codigo: req.body.codigo,
         descripcion: req.body.descripcion,

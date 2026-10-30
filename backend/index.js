@@ -8,6 +8,14 @@ const PORT = 4100;
 
 // Middlewares
 app.use(express.json()); // Para que el servidor entienda JSON en el body
+
+// DEBUG temporal: ver qué llega en cada POST/PUT/DELETE
+app.use((req, res, next) => {
+  if (!["GET", "OPTIONS"].includes(req.method)) {
+    console.log(`[DEBUG] ${req.method} ${req.url} | content-type: ${req.headers["content-type"]} | body:`, req.body);
+  }
+  next();
+});
 app.use(cors());
 
 app.use("/api", rutausuario);
