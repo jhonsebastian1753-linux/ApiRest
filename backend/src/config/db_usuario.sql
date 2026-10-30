@@ -66,6 +66,34 @@ ALTER TABLE `usuario`
   MODIFY `id_usuario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
+--
+-- Table structure for table `producto`
+--
+
+CREATE TABLE `producto` (
+  `codigo` varchar(20) NOT NULL,
+  `descripcion` varchar(200) NOT NULL,
+  `unidad` enum('bulto','kilos','libras','unidad','metro') NOT NULL,
+  `costo` decimal(10,2) NOT NULL,
+  `precio` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `producto`
+--
+
+INSERT INTO `producto` (`codigo`, `descripcion`, `unidad`, `costo`, `precio`) VALUES
+('P001', 'CementoModal', 'bulto', 25000.00, 32000.00),
+('P002', 'Martillo carpintero', 'unidad', 18000.00, 25000.00),
+('P003', 'Clavos 2 pulgadas', 'kilos', 4500.00, 6500.00);
+
+--
+-- Indexes and keys for table `producto`
+--
+
+ALTER TABLE `producto`
+  ADD PRIMARY KEY (`codigo`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

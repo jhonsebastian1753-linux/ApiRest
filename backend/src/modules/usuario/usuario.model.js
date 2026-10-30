@@ -1,7 +1,8 @@
+import bcrypt from "bcryptjs";
 import db from "../../config/dbconexion.js";
 
 export const UserModel = {
-  findALL: async () => {
+  findAll: async () => {
     const sql = "SELECT * FROM usuario ORDER BY apellidos";
 
     // Almacenamos la respuesta en un arreglo
