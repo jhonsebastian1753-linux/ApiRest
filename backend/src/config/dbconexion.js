@@ -3,7 +3,7 @@ import mysql from "mysql2/promise";
 
 // Creamos el pool de conexiones
 const pool = mysql.createPool({
-  host: process.env.APP_HOST || "localhost",
+  host: process.env.MYSQL_ADDON_HOST || "localhost",
   port: Number(process.env.MYSQL_ADDON_PORT) || 3306,
   user: process.env.MYSQL_ADDON_USER || "root",
   password: process.env.MYSQL_ADDON_PASSWORD || "",
