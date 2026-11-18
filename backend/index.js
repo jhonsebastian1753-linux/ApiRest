@@ -1,25 +1,29 @@
-import express from "express";
+
+import express from "express"; // Importamos la librería Express
+import "dotenv/config";
 import cors from "cors";
-import rutausuario from './src/modules/usuario/usuario.routes.js'
-import rutaproducto from './src/modules/productos/Producto.routes.js'
+import rutausuario from "./src/modules/usuario/usuario.routes.js";
 
+// Creamos una instancia de Express
 const app = express();
-const PORT = 4100;
 
-// Middlewares
-app.use(express.json()); // Para que el servidor entienda JSON en el body
+// Puerto donde se ejecutará el servidor
+const PORT = process.env.PORT || 4100;
 
-// DEBUG temporal: ver qué llega en cada POST/PUT/DELETE
-app.use((req, res, next) => {
-  if (!["GET", "OPTIONS"].includes(req.method)) {
-    console.log(`[DEBUG] ${req.method} ${req.url} | content-type: ${req.headers["content-type"]} | body:`, req.body);
-  }
-  next();
+// MIDDLEWARES
+app.use(express.urlencoded({ extended: true })); // Permite recibir datos de formularios
+app.use(express.json()); // Permite recibir datos en formato JSON
+app.use(cors()); // Permite las peticiones desde otros dominios
+
+// Ruta principal
+app.get("/", (req, res) => {
+  res.send("¡Hola, mundo!");
 });
-app.use(cors());
 
+// Rutas de usuario
 app.use("/api", rutausuario);
-app.use("/api", rutaproducto);
-app.listen(PORT, (req, res) => {
-  console.log(`Server iniciado en : http://localhost:${PORT}`);
+
+// Iniciamos el servidor
+app.listen(PORT, () => {
+  console.log(`Servidor iniciado en el puerto ${PORT}`);
 });
