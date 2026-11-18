@@ -2,13 +2,23 @@ import bcrypt from "bcryptjs";
 import db from "../../config/dbconexion.js";
 
 export const UserModel = {
-  findAll: async () => {
-    const sql = "SELECT * FROM usuario ORDER BY apellidos";
+  
+findALL: async (page, limit) => {
+  const sql =
+    "SELECT * FROM usuario ORDER BY apellidos, id_usuario LIMIT ? OFFSET ?";
 
-    // Almacenamos la respuesta en un arreglo
-    const [rows] = await db.query(sql);
-    return rows;
-  },
+  const [rows] = await db.query(sql, [limit, (page - 1) * limit]);
+
+  const [count] = await db.query(
+    "SELECT COUNT(*) AS total FROM usuario"
+  );
+
+  return {
+    results: rows,
+    total: count[0].total
+  };
+},
+
   findById: async (id) => {
 const sql = "SELECT * FROM usuario WHERE id_usuario=?";
 //almacenamos la respuesta en un arreglo

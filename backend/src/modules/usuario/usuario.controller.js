@@ -1,16 +1,33 @@
 import { UserModel } from "./usuario.model.js";
 
+
 export const obtenerUsuarios = async (req, res) => {
-// codigo protegido con try..catch
-try {
-const results = await UserModel.findAll();
-res.json({ results });
-} catch (error) {
-res.status(500).json({
-error: `error al listar : ${error}`,
-});
-}
+  const { page = "1", limit = "10" } = req.query;
+
+  const pagina = Number(page);
+  const limite = Number(limit);
+
+  try {
+    const { results, total } = await UserModel.findALL(pagina, limite);
+
+    res.json({
+      results,
+      pagination: {
+        page: pagina,
+        limit: limite,
+        total,
+        totalPages: Math.ceil(total / limite),
+      },
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      error: `error al listar : ${error}`,
+    });
+  }
 };
+
 
 export const obtenerUsuarioId = async (req, res) => {
 // codigo protegido con try..catch
